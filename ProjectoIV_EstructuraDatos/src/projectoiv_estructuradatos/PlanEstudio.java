@@ -14,7 +14,13 @@ import java.util.ArrayList;
 public class PlanEstudio {
 
     private DirectedGraph Plan;
-    private String Name;
+    private final String Name;
+    private final String Codigo;
+    
+    public PlanEstudio(String c, String n){
+        Codigo=c;
+        Name=n;
+    }
 
     //public void FillPlan(ArrayList<Clase> Clases){
     //}
@@ -24,5 +30,9 @@ public class PlanEstudio {
 
     public void setPlan(DirectedGraph Plan) {
         this.Plan = Plan;
+    }
+    
+    public String getName(){
+        return Name;
     }
 }

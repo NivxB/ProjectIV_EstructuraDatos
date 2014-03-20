@@ -1,0 +1,5 @@
+Álgebra;AL;SISI;0
+Intro. Comp;ICSISI;SISI;0
+Orga. Archivos;OASISI;SISI;1
+Números Numéricos;NN;SISI;1
+Teoría de Arias;TA;SISI;0
