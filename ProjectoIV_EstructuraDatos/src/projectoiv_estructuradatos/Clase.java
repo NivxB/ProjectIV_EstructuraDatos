@@ -10,9 +10,35 @@ package projectoiv_estructuradatos;
  */
 public class Clase {
     
-    private String Name;
-    private boolean Aproved;
-    private boolean Semestral;
+    private final String Name;
+    private final String Codigo;
+    private final String CodPlan;
+    private boolean Approved;
+    private final boolean Semestral;
+    
+    public Clase(String n, String c, String cp, boolean sem){
+        Name=n;
+        Codigo=c;
+        CodPlan=cp;
+        Approved=false;
+        Semestral=sem;
+    }
+    
+    public void setApproved(boolean b){
+        Approved=b;
+    }
+    
+    public boolean isApproved(){
+        return Approved;
+    }
+    
+    public String getName(){
+        return Name;
+    }
+    
+    public String getCodigo(){
+        return Codigo;
+    }
     
     
 }
