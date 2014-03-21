@@ -9,7 +9,7 @@ package projectoiv_estructuradatos;
  * @author Kevin Barahona
  */
 public class Nodo {
-    
+
     private Clase Data;
     private boolean VISITED;
     private Nodo Father;
@@ -18,12 +18,23 @@ public class Nodo {
         return Father;
     }
 
-    public void setFather(Nodo Father) {
-        this.Father = Father;
+    public Nodo(Clase Data) {
+        this.Data = Data;
+        VISITED = false;
+        Father = null;
+    }
+
+    @Override
+    public String toString() {
+        return Data.getName();
     }
 
     
     
+    public void setFather(Nodo Father) {
+        this.Father = Father;
+    }
+
     public Clase getData() {
         return Data;
     }
@@ -39,7 +50,4 @@ public class Nodo {
     public void setVISITED(boolean VISITED) {
         this.VISITED = VISITED;
     }
-    
-    
-    
 }

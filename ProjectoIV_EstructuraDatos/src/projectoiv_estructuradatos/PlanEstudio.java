@@ -5,6 +5,7 @@
 package projectoiv_estructuradatos;
 
 import edu.uci.ics.jung.graph.DirectedGraph;
+import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
 import java.util.ArrayList;
 
 /**
@@ -13,15 +14,22 @@ import java.util.ArrayList;
  */
 public class PlanEstudio {
 
-    private DirectedGraph Plan;
+    private DirectedGraph<Nodo,String> Plan;
     private final String Name;
     private final String Codigo;
     
     public PlanEstudio(String c, String n){
         Codigo=c;
         Name=n;
+        Plan = new DirectedSparseMultigraph<>();
     }
 
+    public String getCodigo() {
+        return Codigo;
+    }
+
+    
+    
     //public void FillPlan(ArrayList<Clase> Clases){
     //}
     public DirectedGraph getPlan() {
