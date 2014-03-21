@@ -32,11 +32,13 @@ public class ProjectoIV_EstructuraDatos {
 
     private static ArrayList<PlanEstudio> Planes = new ArrayList();
     private static ArrayList<ArrayList<Nodo>> PlanesOrdenados = new ArrayList();
+    private static User Usuario;
     //private static ArrayList<Clase> Clases = new ArrayList();
     //private static ArrayList<Requisito> Requisitos = new ArrayList();
     //private static int PlanActual = 0;
 
     public static void main(String[] args) throws Exception {
+        Usuario = new User("NX","SISI");
         fillPlanes();
         paintGraph(Planes.get(0).getPlan());
         paintGraph(Planes.get(1).getPlan()); 
@@ -55,6 +57,8 @@ public class ProjectoIV_EstructuraDatos {
 
 
     }
+    
+    
 
     private static void fillPlanes() throws FileNotFoundException {
         //Llenado por cada plan de estudio que este guardado
@@ -76,6 +80,17 @@ public class ProjectoIV_EstructuraDatos {
             }
         }
     }
+    
+    private static void setApproved(Clase ClaseR) throws FileNotFoundException{
+        File Archivo = new File("./data/ClasesAprobadas.txt");
+        Scanner s = new Scanner(Archivo);
+        while (s.hasNextLine()){
+            String[] arr = s.nextLine().split(";");
+            if (arr[0].equals(Usuario.getCod()) && arr[1].equals(ClaseR.getCodigo())){
+                ClaseR.setApproved(true);
+            }
+        }
+    }
 
     private static void fillClases() throws FileNotFoundException {//cod es el código de la carrera que nos interesa
         //solo llenar clases carrera actual para no desperdiciar memoria, sin embargo hay que crear una clase para cada carrera
@@ -93,6 +108,7 @@ public class ProjectoIV_EstructuraDatos {
                     }
                     //System.out.println("Antes Clase");
                     Clase NewC = new Clase(arr[0], arr[1], arr[2], temp);
+                    setApproved(NewC);
                     //System.out.println("Antes Nodo Despues Clase");
                     Nodo NewV = new Nodo(NewC);
                     //System.out.println("Despues Nodo");
@@ -216,7 +232,10 @@ public class ProjectoIV_EstructuraDatos {
         Transformer<Nodo, Paint> vertexPaint = new Transformer<Nodo, Paint>() {
             @Override
             public Paint transform(Nodo i) {
-                return Color.CYAN;
+                if (i.getData().isApproved())
+                    return Color.gray;
+                else
+                    return Color.CYAN;
             }
         };
         Transformer<Nodo, Shape> vertexSize = new Transformer<Nodo, Shape>() {

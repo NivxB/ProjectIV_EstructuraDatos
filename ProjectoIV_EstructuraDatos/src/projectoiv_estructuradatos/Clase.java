@@ -20,9 +20,9 @@ public class Clase {
         Name=n;
         Codigo=c;
         CodPlan=cp;
-        Approved=false;
         Semestral=sem;
     }
+    
     
     public void setApproved(boolean b){
         Approved=b;
