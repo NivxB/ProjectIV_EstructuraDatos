@@ -44,9 +44,10 @@ public class ProjectoIV_EstructuraDatos {
         //Usuario = new User("NX", "SISI");
         fillPlanes();
         fillApproved();
-        
+
         //run(Usuario);
         paintGraph(Planes.get(0).getPlan());
+        fillPlanesOrdenados();
         //paintGraph(Planes.get(1).getPlan());
 
 
@@ -61,6 +62,16 @@ public class ProjectoIV_EstructuraDatos {
          }
          }
          */
+
+        for (int i = 0; i < PlanesOrdenados.size(); i++) {
+            ArrayList<Nodo> T = PlanesOrdenados.get(i);
+            if (Planes.get(i).getCodigo().equals(Usuario.getPlanEstudio())) {
+                for (Nodo temp : T) {
+                    System.out.println(temp);
+                }
+                break;
+            }
+        }
     }
 
     public static boolean Login(String User) throws FileNotFoundException {
@@ -302,6 +313,7 @@ public class ProjectoIV_EstructuraDatos {
 
     private static void fillPlanesOrdenados() {
         for (int i = 0; i < Planes.size(); i++) {
+            PlanesOrdenados.add(new ArrayList<Nodo>());
             TopologicalSort(i);
         }
     }
@@ -325,7 +337,9 @@ public class ProjectoIV_EstructuraDatos {
             }
         }
 
-        PlanesOrdenados.get(i).add(Cookie);
+        if (!Cookie.getData().isApproved()) {
+            PlanesOrdenados.get(i).add(Cookie);
+        }
     }
 
     private static void paintGraph(DirectedGraph X) {
