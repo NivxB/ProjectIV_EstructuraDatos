@@ -20,7 +20,10 @@ import java.awt.geom.Ellipse2D;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import static java.util.Collections.list;
+import java.util.HashSet;
 import java.util.Scanner;
+import java.util.Set;
 import javax.swing.JFrame;
 import org.apache.commons.collections15.Transformer;
 
@@ -38,10 +41,12 @@ public class ProjectoIV_EstructuraDatos {
     //private static int PlanActual = 0;
 
     public static void main(String[] args) throws Exception {
-        Usuario = new User("NX","SISI");
+        Usuario = new User("NX", "SISI");
         fillPlanes();
+        run(Usuario);
         paintGraph(Planes.get(0).getPlan());
-        paintGraph(Planes.get(1).getPlan()); 
+        //paintGraph(Planes.get(1).getPlan());
+        
 
         /*       for (int i = 0; i < Clases.size(); i++) {
          System.out.println(Clases.get(i).getName());
@@ -54,11 +59,66 @@ public class ProjectoIV_EstructuraDatos {
          }
          }
          */
+    }
 
+    private static void run(User u) {//usuario actual
+        Scanner s = new Scanner(System.in);
+        System.out.println(u.getPlanEstudio().toString());
+        Nodo[] Vertices = new Nodo[0];
+        ArrayList<Integer> aprobadas = new ArrayList();
+        int selection = 0;
+        int thisPlan=0;
+        for (int i = 0; i < Planes.size(); i++) {
+            if (Planes.get(i).getCodigo().equals(u.getPlanEstudio())) {
+                Vertices = (Nodo[]) Planes.get(i).getPlan().getVertices().toArray(new Nodo[0]);
+                thisPlan=i;
+                break;
+            }
+        }
+
+        /*for (int i = 0; i < Vertices.length; i++) {
+         Nodo temp = Vertices[i];
+         int swap=Vertices.length-1-i;
+         Vertices[i] = Vertices[swap];
+         Vertices[swap] = temp;
+         }*/
+        System.out.println("Clases: ");
+
+        for (int i = 0; i < Vertices.length; i++) {
+            System.out.println((i + 1) + Vertices[i].getData().getName());
+        }
+
+        System.out.println("Ingrese los índices de las clases que ya cursó: (0 para terminar de ingresar clases)\n");
+        do {
+            boolean b = false;
+            selection = s.nextInt();
+            if (selection != 0) {
+                aprobadas.add(selection);
+            }
+
+            for (int i = 0; i < Vertices.length; i++) {
+                for (int j = 0; j < aprobadas.size(); j++) {
+                    b = false;
+                    if ((i + 1) == aprobadas.get(j)) {
+                        b = true;
+                        break;
+                    }
+                }
+                if (!b) {
+                    System.out.println((i + 1) + Vertices[i].getData().getName());
+                }
+            }
+        } while (selection != 0);
+
+        Set<Integer> set = new HashSet<Integer>(aprobadas);//o podría hacer un método para remover duplicados, pero sabemos que eso no pasará :)
+
+        for (Integer temp : set) {
+            Planes.get(thisPlan).getPlan().removeVertex(Vertices[temp-1]);
+        }
+
+        System.out.println("\nIngrese el periodo actual: (1,2,3,4)");
 
     }
-    
-    
 
     private static void fillPlanes() throws FileNotFoundException {
         //Llenado por cada plan de estudio que este guardado
@@ -80,13 +140,13 @@ public class ProjectoIV_EstructuraDatos {
             }
         }
     }
-    
-    private static void setApproved(Clase ClaseR) throws FileNotFoundException{
+
+    private static void setApproved(Clase ClaseR) throws FileNotFoundException {
         File Archivo = new File("./data/ClasesAprobadas.txt");
         Scanner s = new Scanner(Archivo);
-        while (s.hasNextLine()){
+        while (s.hasNextLine()) {
             String[] arr = s.nextLine().split(";");
-            if (arr[0].equals(Usuario.getCod()) && arr[1].equals(ClaseR.getCodigo())){
+            if (arr[0].equals(Usuario.getCod()) && arr[1].equals(ClaseR.getCodigo())) {
                 ClaseR.setApproved(true);
             }
         }
@@ -158,9 +218,9 @@ public class ProjectoIV_EstructuraDatos {
                 String[] arr = s.nextLine().split(";");
                 if (arr[2].equals(Planes.get(Planes.size() - 1).getCodigo())) {
                     Nodo FirstNode = getVertex(arr[0]);
-                   // System.out.println(FirstNode + " Nodo 1");
+                    // System.out.println(FirstNode + " Nodo 1");
                     Nodo SecondNode = getVertex(arr[1]);
-                   // System.out.println(SecondNode + " Nodo2");
+                    // System.out.println(SecondNode + " Nodo2");
 
                     if (FirstNode != null && SecondNode != null) {
                         String G = Planes.get(Planes.size() - 1).getPlan().getEdgeCount() + "";
@@ -168,9 +228,7 @@ public class ProjectoIV_EstructuraDatos {
                         //System.out.println("Add Edge");
                     }
 
-
                 }
-
 
             } catch (Exception e) {
                 //System.out.println(e);
@@ -225,17 +283,18 @@ public class ProjectoIV_EstructuraDatos {
 // Layout<V, E>, BasicVisualizationServer<V,E>
         Layout<Nodo, String> layout = new FRLayout(X);
         layout.setSize(new Dimension(650, 650));
-        BasicVisualizationServer<Nodo, String> vv =
-                new BasicVisualizationServer<>(layout);
+        BasicVisualizationServer<Nodo, String> vv
+                = new BasicVisualizationServer<>(layout);
         vv.setPreferredSize(new Dimension(700, 700));
 // Setup up a new vertex to paint transformer...
         Transformer<Nodo, Paint> vertexPaint = new Transformer<Nodo, Paint>() {
             @Override
             public Paint transform(Nodo i) {
-                if (i.getData().isApproved())
+                if (i.getData().isApproved()) {
                     return Color.gray;
-                else
+                } else {
                     return Color.CYAN;
+                }
             }
         };
         Transformer<Nodo, Shape> vertexSize = new Transformer<Nodo, Shape>() {
@@ -249,8 +308,8 @@ public class ProjectoIV_EstructuraDatos {
         float dash[] = {10.0f};
         final Stroke edgeStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
                 BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
-        Transformer<String, Stroke> edgeStrokeTransformer =
-                new Transformer<String, Stroke>() {
+        Transformer<String, Stroke> edgeStrokeTransformer
+                = new Transformer<String, Stroke>() {
                     public Stroke transform(String s) {
                         return edgeStroke;
                     }
