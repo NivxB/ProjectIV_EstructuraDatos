@@ -13,7 +13,23 @@ public class User {
     private String Cod;
     private String PlanEstudio;
     private String Rol;//???????????????
+    private String Nomb;
 
+    public String getNomb() {
+        return Nomb;
+    }
+
+    public void setNomb(String Nomb) {
+        this.Nomb = Nomb;
+    }
+    
+       
+    public void clear(){
+        Nomb = "";
+        Cod = "";
+        PlanEstudio = "";
+        Rol = "";
+    }
     public String getCod() {
         return Cod;
     }

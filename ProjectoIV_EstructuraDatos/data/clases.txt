@@ -1,10 +1,66 @@
-﻿Álgebra;AL;SISI;0
+﻿Álgebra;MAT102;SISI;0
 
-Intro. Comp;ICSISI;SISI;0
+Español;ESP;SISI;0
+Intro. Comp;CCC106;SISI;0
 
-Orga. Archivos;OASISI;SISI;1
+Ofimatica I;LCC1;SISI;0
+Geometria y Trigonometria;MAT103;SISI;0
+Historia de Honduras;HIS;SISI;0
+Programacion I;CCC104;SISI;0
+Lab. PrograI;LCP104;SISI;0
+Ofimatica II;LCC2;SISI;0
+Calculo Diferencial;MAT104;SISI;0
+Administracion I;ADM;SISI;0
+Programacion II;CCC105;SISI;0
+Lab. PrograII;LCP208;SISI;0
+IdiomaI;EIE1;SISI;0
+Programacion III;CCC208;SISI;0
+Lab. PrograIII;LCP205;SISI;0
+Ofimatica III;LCC3;SISI;0
+Calculo Integral;MAT201;SISI;0
+Algebra Lineal;MAT105;SISI;0
+Calculo II;MAT202;SISI;0
+Fisica I;FIS1;SISI;0
+Estructura de Datos;CCC301;SISI;0
+Idioma II;EIE2;SISI;0
+Ecuaciones Diferenciales;MAT203;SISI;0
+Fisica II;FIS2;SISI;0
+Orga. Archivos;CCC302;SISI;1
 
-Números Numéricos;NN;SISI;1
+IdiomaIII;EIE3;SISI;0
+Matematicas Discretas;MAT303;SISI;0
+Fisica III;FIS3;SISI;0
+Programacion IV;CCC205;SISI;0
+IdiomaIV;EIE4;SISI;0
+Metodos Numéricos;MAT304;SISI;1
+Estadistica Matematica;MAT301;SISI;0
 
+Sistemas de Informacion;INF301;SISI;0
+Sociologia;SOC1;SISI;0
+Analisis de Algoritmo;CCC407;SISI;0
+Diseño Logico Digital;CCC305;SISI;0
+Teoria de Base de Datos I;CCC303;SISI;1
+Filosofia;FIL;SISI;0
+Organizacion Computadoras;CCC403;SISI;0
+Teoria de Base de Datos II;CCC304;SISI;1
+Electiva Arte;ARTDEP;SISI;0
+Analisis Contable;CON204;SISI;0
+Lenguajes de Programacion;CCC408;SISI;0
+Electiva CCNN;BIO;SISI;0
+Analisis Contable II;CON308;SISI;0
+Teoria de la Computacion;CCC408;SISI;0
+Generacion de Empresas I;EMP401;SISI;0
+Analisis y Diseño de Sis I;INF405;SISI;1
+Sistemas Operativos I;CCC402;SISI;1
+Redes;CCC404;SISI;0
+Analisis y Diseñde de SisII;INF406;1
+Sistemas Operativos II;CCC403;SISI;1
+Electiva Formacion I;EFECCC1;SISI;1
+Ingenieria de Software;CCC406;SISI;0
+Compiladores I;CCC501;SISI;1
+Proyecto Graduacion I;CCC593;SISI;1
+Electiva Formacion II;EFECCC2;SISI;1
+Compiladores II;CCC502;SISI;1
+Proyecto Graduacion II;CCC594;SISI;1
 Teoría de Arias;TA;SISI;0
 Intro Turismo;IT;TURI;0

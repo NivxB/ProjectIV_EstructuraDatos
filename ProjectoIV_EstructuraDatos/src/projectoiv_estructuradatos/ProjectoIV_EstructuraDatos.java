@@ -40,13 +40,15 @@ public class ProjectoIV_EstructuraDatos {
     //private static ArrayList<Requisito> Requisitos = new ArrayList();
     //private static int PlanActual = 0;
 
-    public static void main(String[] args) throws Exception {
-        Usuario = new User("NX", "SISI");
+    public static void Prin() throws Exception {
+        //Usuario = new User("NX", "SISI");
         fillPlanes();
-        run(Usuario);
+        fillApproved();
+        
+        //run(Usuario);
         paintGraph(Planes.get(0).getPlan());
         //paintGraph(Planes.get(1).getPlan());
-        
+
 
         /*       for (int i = 0; i < Clases.size(); i++) {
          System.out.println(Clases.get(i).getName());
@@ -61,17 +63,65 @@ public class ProjectoIV_EstructuraDatos {
          */
     }
 
+    public static boolean Login(String User) throws FileNotFoundException {
+        File Archivo = new File("./data/user.txt");
+        Scanner s = new Scanner(Archivo);
+        while (s.hasNextLine()) {
+            try {
+                String[] arr = s.nextLine().split(";");
+                String COD = arr[0];
+                String P = arr[1];
+                String Nomb = arr[2];
+                if (User.equals(COD)) {
+                    Usuario = new User();
+                    Usuario.setCod(COD);
+                    Usuario.setPlanEstudio(P);
+                    Usuario.setNomb(Nomb);
+                    return true;
+                }
+            } catch (Exception e) {
+                System.out.println(e);
+                System.err.println("No se encontró \"user.txt\"");
+            }
+        }
+        return false;
+    }
+
+    public static void Logout() {
+        Usuario.clear();
+        PlanesOrdenados.clear();
+        removeApproved();
+    }
+
+    private static void fillApproved() throws FileNotFoundException {
+        for (PlanEstudio tmp : Planes) {
+            Nodo[] Cla = (Nodo[]) tmp.getPlan().getVertices().toArray(new Nodo[0]);
+            for (Nodo temp : Cla) {
+                setApproved(temp.getData());
+            }
+        }
+    }
+
+    private static void removeApproved() {
+        for (PlanEstudio tmp : Planes) {
+            Nodo[] Cla = (Nodo[]) tmp.getPlan().getVertices().toArray(new Nodo[0]);
+            for (Nodo temp : Cla) {
+                temp.getData().setApproved(false);
+            }
+        }
+    }
+
     private static void run(User u) {//usuario actual
         Scanner s = new Scanner(System.in);
         System.out.println(u.getPlanEstudio().toString());
         Nodo[] Vertices = new Nodo[0];
         ArrayList<Integer> aprobadas = new ArrayList();
         int selection = 0;
-        int thisPlan=0;
+        int thisPlan = 0;
         for (int i = 0; i < Planes.size(); i++) {
             if (Planes.get(i).getCodigo().equals(u.getPlanEstudio())) {
                 Vertices = (Nodo[]) Planes.get(i).getPlan().getVertices().toArray(new Nodo[0]);
-                thisPlan=i;
+                thisPlan = i;
                 break;
             }
         }
@@ -113,7 +163,7 @@ public class ProjectoIV_EstructuraDatos {
         Set<Integer> set = new HashSet<Integer>(aprobadas);//o podría hacer un método para remover duplicados, pero sabemos que eso no pasará :)
 
         for (Integer temp : set) {
-            Planes.get(thisPlan).getPlan().removeVertex(Vertices[temp-1]);
+            Planes.get(thisPlan).getPlan().removeVertex(Vertices[temp - 1]);
         }
 
         System.out.println("\nIngrese el periodo actual: (1,2,3,4)");
@@ -168,7 +218,7 @@ public class ProjectoIV_EstructuraDatos {
                     }
                     //System.out.println("Antes Clase");
                     Clase NewC = new Clase(arr[0], arr[1], arr[2], temp);
-                    setApproved(NewC);
+                    //setApproved(NewC);
                     //System.out.println("Antes Nodo Despues Clase");
                     Nodo NewV = new Nodo(NewC);
                     //System.out.println("Despues Nodo");
@@ -283,8 +333,7 @@ public class ProjectoIV_EstructuraDatos {
 // Layout<V, E>, BasicVisualizationServer<V,E>
         Layout<Nodo, String> layout = new FRLayout(X);
         layout.setSize(new Dimension(650, 650));
-        BasicVisualizationServer<Nodo, String> vv
-                = new BasicVisualizationServer<>(layout);
+        BasicVisualizationServer<Nodo, String> vv = new BasicVisualizationServer<>(layout);
         vv.setPreferredSize(new Dimension(700, 700));
 // Setup up a new vertex to paint transformer...
         Transformer<Nodo, Paint> vertexPaint = new Transformer<Nodo, Paint>() {
@@ -308,12 +357,11 @@ public class ProjectoIV_EstructuraDatos {
         float dash[] = {10.0f};
         final Stroke edgeStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
                 BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
-        Transformer<String, Stroke> edgeStrokeTransformer
-                = new Transformer<String, Stroke>() {
-                    public Stroke transform(String s) {
-                        return edgeStroke;
-                    }
-                };
+        Transformer<String, Stroke> edgeStrokeTransformer = new Transformer<String, Stroke>() {
+            public Stroke transform(String s) {
+                return edgeStroke;
+            }
+        };
         vv.getRenderContext().setVertexFillPaintTransformer(vertexPaint);
         vv.getRenderContext().setVertexShapeTransformer(vertexSize);
 
