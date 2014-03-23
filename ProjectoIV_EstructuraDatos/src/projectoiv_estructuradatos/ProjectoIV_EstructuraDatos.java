@@ -338,7 +338,21 @@ public class ProjectoIV_EstructuraDatos {
         }
 
         if (!Cookie.getData().isApproved()) {
-            PlanesOrdenados.get(i).add(Cookie);
+            Nodo[] IN = (Nodo[]) Planes.get(i).getPlan().getPredecessors(Cookie).toArray(new Nodo[0]);
+            if (IN.length == 0) {
+                PlanesOrdenados.get(i).add(Cookie);
+            } else {
+                boolean Ingresar = true;
+                for (Nodo tmp : IN) {
+                    if (!tmp.getData().isApproved()) {
+                        Ingresar = false;
+                    }
+                }
+
+                if (Ingresar) {
+                    PlanesOrdenados.get(i).add(Cookie);
+                }
+            }
         }
     }
 
