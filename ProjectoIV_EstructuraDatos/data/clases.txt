@@ -38,14 +38,14 @@ Estadistica Matematica;MAT301;SISI;0
 Sistemas de Informacion;INF301;SISI;0
 Sociologia;SOC1;SISI;0
 Analisis de Algoritmo;CCC407;SISI;0
-Diseño Logico Digital;CCC305;SISI;0
+Diseño Logico Digital;CCC305;SISI;1
 Teoria de Base de Datos I;CCC303;SISI;1
 Filosofia;FIL;SISI;0
 Organizacion Computadoras;CCC403;SISI;0
 Teoria de Base de Datos II;CCC304;SISI;1
 Electiva Arte;ARTDEP;SISI;0
 Analisis Contable;CON204;SISI;0
-Lenguajes de Programacion;CCC408;SISI;0
+Lenguajes de Programacion;CCC408;SISI;1
 Electiva CCNN;BIO;SISI;0
 Analisis Contable II;CON308;SISI;0
 Teoria de la Computacion;CCC408;SISI;0
@@ -56,7 +56,7 @@ Redes;CCC404;SISI;0
 Analisis y Diseñde de SisII;INF406;1
 Sistemas Operativos II;CCC403;SISI;1
 Electiva Formacion I;EFECCC1;SISI;1
-Ingenieria de Software;CCC406;SISI;0
+Ingenieria de Software;CCC406;SISI;1
 Compiladores I;CCC501;SISI;1
 Proyecto Graduacion I;CCC593;SISI;1
 Electiva Formacion II;EFECCC2;SISI;1
