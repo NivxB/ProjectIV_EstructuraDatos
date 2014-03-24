@@ -80,22 +80,27 @@ public class ProjectoIV_EstructuraDatos {
         Nodo[] NODO = (Nodo[]) Xg.vertexSet().toArray(new Nodo[0]);
         int X = 0;
         int Y = 0;
+        System.out.println("Plan Ordenado: ");
         for (Nodo tmp : NODO) {
             if (X == 400) {
                 X = 0;
-                Y += 50;
+                Y += 60;
             }
 
+            /*
             if (tmp.getData().getCodigo().equals("LCP104") || tmp.getData().getCodigo().equals("LCP105") || tmp.getData().getCodigo().equals("LCP208")) {
                 X -= 100;
                 if (X < 0) {
-                    X = 300;
+                    X = 200;
                     Y -= 50;
                 }
                 positionVertexAt(tmp, X, Y + 25);
             } else {
-                positionVertexAt(tmp, X, Y);
+                
             }
+            * */
+            System.out.println(tmp);
+            positionVertexAt(tmp, X, Y);
             X += 100;
         }
         JPanel container = new JPanel();
@@ -105,6 +110,8 @@ public class ProjectoIV_EstructuraDatos {
         D.add(pane);
         D.pack();
         D.show();
+        
+        
     }
 
     public static boolean Login(String User) throws FileNotFoundException {
@@ -237,7 +244,7 @@ public class ProjectoIV_EstructuraDatos {
         try {
             PrintWriter out = new PrintWriter(new FileWriter(Archivo, true));
             for (int i = 0; i < app.size(); i++) {
-                out.append(Usuario.getCod() + ";" + app.get(i) + "\n");
+                out.append("\r\n"+Usuario.getCod() + ";" + app.get(i));
             }
             out.close();
         } catch (IOException e) {

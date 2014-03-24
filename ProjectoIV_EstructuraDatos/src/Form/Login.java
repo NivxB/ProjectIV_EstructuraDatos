@@ -46,10 +46,6 @@ public class Login extends javax.swing.JFrame {
         jMenuBar2 = new javax.swing.JMenuBar();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
-        jMenu4 = new javax.swing.JMenu();
-        jMenuItem2 = new javax.swing.JMenuItem();
-        jMenu7 = new javax.swing.JMenu();
-        jMenuItem3 = new javax.swing.JMenuItem();
         jMenu6 = new javax.swing.JMenu();
         Usuario = new javax.swing.JFrame();
         jLabel6 = new javax.swing.JLabel();
@@ -89,20 +85,6 @@ public class Login extends javax.swing.JFrame {
         jMenu3.add(jMenuItem1);
 
         jMenuBar2.add(jMenu3);
-
-        jMenu4.setText("Planes de Estudio");
-
-        jMenuItem2.setText("Crear");
-        jMenu4.add(jMenuItem2);
-
-        jMenu7.setText("Clases");
-
-        jMenuItem3.setText("Crear");
-        jMenu7.add(jMenuItem3);
-
-        jMenu4.add(jMenu7);
-
-        jMenuBar2.add(jMenu4);
 
         jMenu6.setText("Mostrar Plan de Estudio");
         jMenu6.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -271,6 +253,7 @@ public class Login extends javax.swing.JFrame {
                 this.hide();
                 jLabel3.setText(ProjectoIV_EstructuraDatos.Usuario.getNomb());
                 jLabel5.setText(ProjectoIV_EstructuraDatos.Usuario.getPlanEstudio());
+                ShowPlan.pack();
                 ShowPlan.show();
             } else {
                 JOptionPane.showMessageDialog(this, "Usuario no encontrado");
@@ -309,6 +292,7 @@ public class Login extends javax.swing.JFrame {
         for (PlanEstudio tmp : ProjectoIV_EstructuraDatos.Planes) {
             PLANESTUDIO.addItem(tmp.getCodigo());
         }
+        Usuario.pack();
         Usuario.setVisible(true);
     }//GEN-LAST:event_jMenu3MouseClicked
 
@@ -369,13 +353,9 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
     private javax.swing.JMenu jMenu6;
-    private javax.swing.JMenu jMenu7;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JMenuBar jMenuBar2;
     private javax.swing.JMenuItem jMenuItem1;
-    private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JMenuItem jMenuItem3;
     // End of variables declaration//GEN-END:variables
 }
