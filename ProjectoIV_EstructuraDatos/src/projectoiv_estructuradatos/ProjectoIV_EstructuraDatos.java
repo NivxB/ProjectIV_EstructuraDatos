@@ -4,12 +4,6 @@
  */
 package projectoiv_estructuradatos;
 
-import edu.uci.ics.jung.algorithms.layout.FRLayout;
-import edu.uci.ics.jung.algorithms.layout.Layout;
-import edu.uci.ics.jung.graph.DirectedGraph;
-import edu.uci.ics.jung.visualization.BasicVisualizationServer;
-import edu.uci.ics.jung.visualization.decorators.ToStringLabeller;
-import edu.uci.ics.jung.visualization.renderers.Renderer;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
@@ -25,7 +19,9 @@ import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
 import javax.swing.JFrame;
-import org.apache.commons.collections15.Transformer;
+import org.jgraph.JGraph;
+import org.jgrapht.ext.JGraphModelAdapter;
+import org.jgrapht.traverse.TopologicalOrderIterator;
 
 /**
  *
@@ -40,14 +36,31 @@ public class ProjectoIV_EstructuraDatos {
     //private static ArrayList<Requisito> Requisitos = new ArrayList();
     //private static int PlanActual = 0;
 
+    public static void fillOrdenados() {
+        PlanesOrdenados.add(new ArrayList<Nodo>());
+        TopologicalOrderIterator<Nodo, String> ordenados = new TopologicalOrderIterator(Planes.get(0).getPlan());
+        while (ordenados.hasNext()) {
+            Nodo tmp = ordenados.next();
+            if (!tmp.getData().isApproved()) {
+                PlanesOrdenados.get(PlanesOrdenados.size() - 1).add(tmp);
+            }
+        }
+    }
+    
+    
     public static void Prin() throws Exception {
         //Usuario = new User("NX", "SISI");
         fillPlanes();
         fillApproved();
-
+        
+        JGraphModelAdapter m_jgAdapter = new JGraphModelAdapter(Planes.get(0).getPlan());
+        JFrame D = new JFrame();
+        JGraph S = new JGraph(m_jgAdapter);
+        D.add(S);
+        D.show();
         //run(Usuario);
-        paintGraph(Planes.get(0).getPlan());
-        fillPlanesOrdenados();
+        // paintGraph(Planes.get(0).getPlan());
+        //fillPlanesOrdenados();
         //paintGraph(Planes.get(1).getPlan());
 
 
@@ -63,15 +76,7 @@ public class ProjectoIV_EstructuraDatos {
          }
          */
 
-        for (int i = 0; i < PlanesOrdenados.size(); i++) {
-            ArrayList<Nodo> T = PlanesOrdenados.get(i);
-            if (Planes.get(i).getCodigo().equals(Usuario.getPlanEstudio())) {
-                for (Nodo temp : T) {
-                    System.out.println(temp);
-                }
-                break;
-            }
-        }
+
     }
 
     public static boolean Login(String User) throws FileNotFoundException {
@@ -105,8 +110,11 @@ public class ProjectoIV_EstructuraDatos {
     }
 
     private static void fillApproved() throws FileNotFoundException {
+
         for (PlanEstudio tmp : Planes) {
-            Nodo[] Cla = (Nodo[]) tmp.getPlan().getVertices().toArray(new Nodo[0]);
+
+            //Nodo[] Cla = (Nodo[]) tmp.getPlan().getVertices().toArray(new Nodo[0]);
+            Nodo[] Cla = (Nodo[]) tmp.getPlan().vertexSet().toArray(new Nodo[0]);
             for (Nodo temp : Cla) {
                 setApproved(temp.getData());
             }
@@ -115,7 +123,8 @@ public class ProjectoIV_EstructuraDatos {
 
     private static void removeApproved() {
         for (PlanEstudio tmp : Planes) {
-            Nodo[] Cla = (Nodo[]) tmp.getPlan().getVertices().toArray(new Nodo[0]);
+            //Nodo[] Cla = (Nodo[]) tmp.getPlan().getVertices().toArray(new Nodo[0]);
+            Nodo[] Cla = (Nodo[]) tmp.getPlan().vertexSet().toArray(new Nodo[0]);
             for (Nodo temp : Cla) {
                 temp.getData().setApproved(false);
             }
@@ -131,7 +140,8 @@ public class ProjectoIV_EstructuraDatos {
         int thisPlan = 0;
         for (int i = 0; i < Planes.size(); i++) {
             if (Planes.get(i).getCodigo().equals(u.getPlanEstudio())) {
-                Vertices = (Nodo[]) Planes.get(i).getPlan().getVertices().toArray(new Nodo[0]);
+                //Vertices = (Nodo[]) Planes.get(i).getPlan().getVertices().toArray(new Nodo[0]);
+                Vertices = (Nodo[]) Planes.get(i).getPlan().vertexSet().toArray(new Nodo[0]);
                 thisPlan = i;
                 break;
             }
@@ -284,7 +294,7 @@ public class ProjectoIV_EstructuraDatos {
                     // System.out.println(SecondNode + " Nodo2");
 
                     if (FirstNode != null && SecondNode != null) {
-                        String G = Planes.get(Planes.size() - 1).getPlan().getEdgeCount() + "";
+                        String G = Planes.get(Planes.size() - 1).getPlan().edgeSet().size() + "";
                         Planes.get(Planes.size() - 1).getPlan().addEdge(G, FirstNode, SecondNode);
                         //System.out.println("Add Edge");
                     }
@@ -300,7 +310,8 @@ public class ProjectoIV_EstructuraDatos {
     }
 
     private static Nodo getVertex(String COD) {
-        Nodo[] Vertices = (Nodo[]) Planes.get(Planes.size() - 1).getPlan().getVertices().toArray(new Nodo[0]);
+        //Nodo[] Vertices = (Nodo[]) Planes.get(Planes.size() - 1).getPlan().getVertices().toArray(new Nodo[0]);
+        Nodo[] Vertices = (Nodo[]) Planes.get(Planes.size() - 1).getPlan().vertexSet().toArray(new Nodo[0]);
 
         for (Nodo tmp : Vertices) {
             if (tmp.getData().getCodigo().equals(COD)) {
@@ -310,97 +321,98 @@ public class ProjectoIV_EstructuraDatos {
 
         return null;
     }
+    /*
+     private static void fillPlanesOrdenados() {
+     for (int i = 0; i < Planes.size(); i++) {
+     PlanesOrdenados.add(new ArrayList<Nodo>());
+     TopologicalSort(i);
+     }
+     }
 
-    private static void fillPlanesOrdenados() {
-        for (int i = 0; i < Planes.size(); i++) {
-            PlanesOrdenados.add(new ArrayList<Nodo>());
-            TopologicalSort(i);
-        }
-    }
+     private static void TopologicalSort(int i) {
+     Nodo[] Vertices = (Nodo[]) Planes.get(i).getPlan().getVertices().toArray(new Nodo[0]);
+     for (Nodo tmp : Vertices) {
+     if (!tmp.isVISITED()) {
+     VisitNode(tmp, i);
+     }
+     }
+     }
 
-    private static void TopologicalSort(int i) {
-        Nodo[] Vertices = (Nodo[]) Planes.get(i).getPlan().getVertices().toArray(new Nodo[0]);
-        for (Nodo tmp : Vertices) {
-            if (!tmp.isVISITED()) {
-                VisitNode(tmp, i);
-            }
-        }
-    }
+     private static void VisitNode(Nodo Cookie, int i) {
+     Cookie.setVISITED(true);
+     Nodo[] Vecino = (Nodo[]) (Planes.get(i).getPlan().getNeighbors(Cookie)).toArray(new Nodo[0]);
+     for (Nodo tmp : Vecino) {
+     if (!tmp.isVISITED()) {
+     tmp.setFather(Cookie);
+     VisitNode(tmp, i);
+     }
+     }
 
-    private static void VisitNode(Nodo Cookie, int i) {
-        Cookie.setVISITED(true);
-        Nodo[] Vecino = (Nodo[]) (Planes.get(i).getPlan().getNeighbors(Cookie)).toArray(new Nodo[0]);
-        for (Nodo tmp : Vecino) {
-            if (!tmp.isVISITED()) {
-                tmp.setFather(Cookie);
-                VisitNode(tmp, i);
-            }
-        }
+     if (!Cookie.getData().isApproved()) {
+     Nodo[] IN = (Nodo[]) Planes.get(i).getPlan().getPredecessors(Cookie).toArray(new Nodo[0]);
+     if (IN.length == 0) {
+     PlanesOrdenados.get(i).add(Cookie);
+     } else {
+     boolean Ingresar = true;
+     for (Nodo tmp : IN) {
+     if (!tmp.getData().isApproved()) {
+     Ingresar = false;
+     }
+     }
 
-        if (!Cookie.getData().isApproved()) {
-            Nodo[] IN = (Nodo[]) Planes.get(i).getPlan().getPredecessors(Cookie).toArray(new Nodo[0]);
-            if (IN.length == 0) {
-                PlanesOrdenados.get(i).add(Cookie);
-            } else {
-                boolean Ingresar = true;
-                for (Nodo tmp : IN) {
-                    if (!tmp.getData().isApproved()) {
-                        Ingresar = false;
-                    }
-                }
+     if (Ingresar) {
+     PlanesOrdenados.get(i).add(Cookie);
+     }
+     }
+     }
+     }
 
-                if (Ingresar) {
-                    PlanesOrdenados.get(i).add(Cookie);
-                }
-            }
-        }
-    }
+     private static void paintGraph(DirectedGraph X) {
+     //SimpleGraphView2 sgv = new SimpleGraphView2(); // This builds the graph
+     // Layout<V, E>, BasicVisualizationServer<V,E>
+     Layout<Nodo, String> layout = new FRLayout(X);
+     layout.setSize(new Dimension(650, 650));
+     BasicVisualizationServer<Nodo, String> vv = new BasicVisualizationServer<>(layout);
+     vv.setPreferredSize(new Dimension(700, 700));
+     // Setup up a new vertex to paint transformer...
+     Transformer<Nodo, Paint> vertexPaint = new Transformer<Nodo, Paint>() {
+     @Override
+     public Paint transform(Nodo i) {
+     if (i.getData().isApproved()) {
+     return Color.gray;
+     } else {
+     return Color.CYAN;
+     }
+     }
+     };
+     Transformer<Nodo, Shape> vertexSize = new Transformer<Nodo, Shape>() {
+     public Shape transform(Nodo i) {
+     Ellipse2D circle = new Ellipse2D.Double(-15, -15, 30, 30);
+     // in this case, the vertex is twice as large
+     return circle;
+     }
+     };
+     // Set up a new stroke Transformer for the edges
+     float dash[] = {10.0f};
+     final Stroke edgeStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
+     BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
+     Transformer<String, Stroke> edgeStrokeTransformer = new Transformer<String, Stroke>() {
+     public Stroke transform(String s) {
+     return edgeStroke;
+     }
+     };
+     vv.getRenderContext().setVertexFillPaintTransformer(vertexPaint);
+     vv.getRenderContext().setVertexShapeTransformer(vertexSize);
 
-    private static void paintGraph(DirectedGraph X) {
-        //SimpleGraphView2 sgv = new SimpleGraphView2(); // This builds the graph
-// Layout<V, E>, BasicVisualizationServer<V,E>
-        Layout<Nodo, String> layout = new FRLayout(X);
-        layout.setSize(new Dimension(650, 650));
-        BasicVisualizationServer<Nodo, String> vv = new BasicVisualizationServer<>(layout);
-        vv.setPreferredSize(new Dimension(700, 700));
-// Setup up a new vertex to paint transformer...
-        Transformer<Nodo, Paint> vertexPaint = new Transformer<Nodo, Paint>() {
-            @Override
-            public Paint transform(Nodo i) {
-                if (i.getData().isApproved()) {
-                    return Color.gray;
-                } else {
-                    return Color.CYAN;
-                }
-            }
-        };
-        Transformer<Nodo, Shape> vertexSize = new Transformer<Nodo, Shape>() {
-            public Shape transform(Nodo i) {
-                Ellipse2D circle = new Ellipse2D.Double(-15, -15, 30, 30);
-                // in this case, the vertex is twice as large
-                return circle;
-            }
-        };
-// Set up a new stroke Transformer for the edges
-        float dash[] = {10.0f};
-        final Stroke edgeStroke = new BasicStroke(1.0f, BasicStroke.CAP_BUTT,
-                BasicStroke.JOIN_MITER, 10.0f, dash, 0.0f);
-        Transformer<String, Stroke> edgeStrokeTransformer = new Transformer<String, Stroke>() {
-            public Stroke transform(String s) {
-                return edgeStroke;
-            }
-        };
-        vv.getRenderContext().setVertexFillPaintTransformer(vertexPaint);
-        vv.getRenderContext().setVertexShapeTransformer(vertexSize);
-
-        vv.getRenderContext().setEdgeStrokeTransformer(edgeStrokeTransformer);
-        vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
-        vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
-        vv.getRenderer().getVertexLabelRenderer().setPosition(Renderer.VertexLabel.Position.CNTR);
-        JFrame frame = new JFrame("Ciudades");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.getContentPane().add(vv);
-        frame.pack();
-        frame.setVisible(true);
-    }
+     vv.getRenderContext().setEdgeStrokeTransformer(edgeStrokeTransformer);
+     vv.getRenderContext().setVertexLabelTransformer(new ToStringLabeller());
+     vv.getRenderContext().setEdgeLabelTransformer(new ToStringLabeller());
+     vv.getRenderer().getVertexLabelRenderer().setPosition(Renderer.VertexLabel.Position.CNTR);
+     JFrame frame = new JFrame("Ciudades");
+     frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+     frame.getContentPane().add(vv);
+     frame.pack();
+     frame.setVisible(true);
+     }
+     */
 }

@@ -4,9 +4,11 @@
  */
 package projectoiv_estructuradatos;
 
-import edu.uci.ics.jung.graph.DirectedGraph;
-import edu.uci.ics.jung.graph.DirectedSparseMultigraph;
+
 import java.util.ArrayList;
+import org.jgrapht.DirectedGraph;
+import org.jgrapht.experimental.dag.DirectedAcyclicGraph;
+import org.jgrapht.graph.DefaultDirectedGraph;
 
 /**
  *
@@ -21,7 +23,7 @@ public class PlanEstudio {
     public PlanEstudio(String c, String n){
         Codigo=c;
         Name=n;
-        Plan = new DirectedSparseMultigraph<>();
+        Plan = new DirectedAcyclicGraph(DirectedAcyclicGraph.class);
     }
 
     public String getCodigo() {
