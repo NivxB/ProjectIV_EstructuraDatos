@@ -64,9 +64,8 @@ public class ProjectoIV_EstructuraDatos {
         //Usuario = new User("NX", "SISI");
         fillPlanes();
         fillApproved();
-        displayGraph(Ordenados(Planes.get(0).getPlan()));
-
-        //run(Usuario);
+        run(Usuario);
+        displayGraph(Ordenados(Planes.get(0).getPlan()));        
     }
 
     public static void displayGraph(Graph Xg) {
@@ -213,8 +212,19 @@ public class ProjectoIV_EstructuraDatos {
         for (Integer temp : set) {
             Planes.get(thisPlan).getPlan().removeVertex(Vertices[temp - 1]);
         }
+        
+        int sem=1;
 
         System.out.println("\nIngrese el periodo actual: (1,2,3,4)");
+        sem=s.nextInt();
+        
+        if(sem==2||sem==4){
+            for(Nodo n :Vertices){
+                if(n.getData().isSemestral()){
+                    Planes.get(thisPlan).getPlan().removeVertex(n);
+                }
+            }
+        }
 
     }
 

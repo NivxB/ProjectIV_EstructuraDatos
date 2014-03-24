@@ -40,5 +40,9 @@ public class Clase {
         return Codigo;
     }
     
+    public boolean isSemestral(){
+        return Semestral;
+    }
+    
     
 }
