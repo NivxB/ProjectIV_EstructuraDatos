@@ -4,11 +4,17 @@
  */
 package Form;
 
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import projectoiv_estructuradatos.PlanEstudio;
 import projectoiv_estructuradatos.ProjectoIV_EstructuraDatos;
+import projectoiv_estructuradatos.User;
 
 /**
  *
@@ -33,40 +39,178 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         ShowPlan = new javax.swing.JFrame();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jMenuBar2 = new javax.swing.JMenuBar();
+        jMenu3 = new javax.swing.JMenu();
+        jMenuItem1 = new javax.swing.JMenuItem();
+        jMenu4 = new javax.swing.JMenu();
+        jMenuItem2 = new javax.swing.JMenuItem();
+        jMenu7 = new javax.swing.JMenu();
+        jMenuItem3 = new javax.swing.JMenuItem();
+        jMenu6 = new javax.swing.JMenu();
+        Usuario = new javax.swing.JFrame();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        COD = new javax.swing.JTextField();
+        NOMB = new javax.swing.JTextField();
+        PLANESTUDIO = new javax.swing.JComboBox();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
         jLabel1 = new javax.swing.JLabel();
         UserTxt = new javax.swing.JTextField();
         jButton1 = new javax.swing.JButton();
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+        jLabel2.setText("Usuario");
+
+        jLabel3.setText("jLabel3");
+
+        jLabel4.setText("Estudiando");
+
+        jLabel5.setText("jLabel3");
+
+        jMenu3.setText("Usuario");
+        jMenu3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu3MouseClicked(evt);
             }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        });
+
+        jMenuItem1.setText("Crear");
+        jMenuItem1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                none(evt);
+            }
+        });
+        jMenu3.add(jMenuItem1);
+
+        jMenuBar2.add(jMenu3);
+
+        jMenu4.setText("Planes de Estudio");
+
+        jMenuItem2.setText("Crear");
+        jMenu4.add(jMenuItem2);
+
+        jMenu7.setText("Clases");
+
+        jMenuItem3.setText("Crear");
+        jMenu7.add(jMenuItem3);
+
+        jMenu4.add(jMenu7);
+
+        jMenuBar2.add(jMenu4);
+
+        jMenu6.setText("Mostrar Plan de Estudio");
+        jMenu6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu6MouseClicked(evt);
+            }
+        });
+        jMenuBar2.add(jMenu6);
+
+        ShowPlan.setJMenuBar(jMenuBar2);
 
         javax.swing.GroupLayout ShowPlanLayout = new javax.swing.GroupLayout(ShowPlan.getContentPane());
         ShowPlan.getContentPane().setLayout(ShowPlanLayout);
         ShowPlanLayout.setHorizontalGroup(
             ShowPlanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, ShowPlanLayout.createSequentialGroup()
-                .addContainerGap(15, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addGroup(ShowPlanLayout.createSequentialGroup()
+                .addGroup(ShowPlanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(ShowPlanLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(ShowPlanLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(jLabel3))
+                    .addGroup(ShowPlanLayout.createSequentialGroup()
+                        .addGap(43, 43, 43)
+                        .addComponent(jLabel5))
+                    .addGroup(ShowPlanLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap(396, Short.MAX_VALUE))
         );
         ShowPlanLayout.setVerticalGroup(
             ShowPlanLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(ShowPlanLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel5)
+                .addContainerGap(91, Short.MAX_VALUE))
+        );
+
+        jLabel6.setText("ID Usuario");
+
+        jLabel7.setText("Nombre");
+
+        jLabel8.setText("Plan de Estudio");
+
+        jMenu1.setText("Aceptar");
+        jMenu1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu1MouseClicked(evt);
+            }
+        });
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Cancelar");
+        jMenuBar1.add(jMenu2);
+
+        Usuario.setJMenuBar(jMenuBar1);
+
+        javax.swing.GroupLayout UsuarioLayout = new javax.swing.GroupLayout(Usuario.getContentPane());
+        Usuario.getContentPane().setLayout(UsuarioLayout);
+        UsuarioLayout.setHorizontalGroup(
+            UsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(UsuarioLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(UsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(UsuarioLayout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(COD, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(UsuarioLayout.createSequentialGroup()
+                        .addGroup(UsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(UsuarioLayout.createSequentialGroup()
+                                .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(UsuarioLayout.createSequentialGroup()
+                                .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, 88, Short.MAX_VALUE)
+                                .addGap(6, 6, 6)))
+                        .addGroup(UsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(PLANESTUDIO, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(NOMB, javax.swing.GroupLayout.DEFAULT_SIZE, 145, Short.MAX_VALUE))))
+                .addContainerGap())
+        );
+        UsuarioLayout.setVerticalGroup(
+            UsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(UsuarioLayout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(UsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(COD, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addGroup(UsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(NOMB, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(UsuarioLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(UsuarioLayout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel8)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UsuarioLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
+                        .addComponent(PLANESTUDIO, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(19, 19, 19))))
         );
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -125,13 +269,52 @@ public class Login extends javax.swing.JFrame {
             if (ProjectoIV_EstructuraDatos.Login(UserTxt.getText().trim())) {
                 ProjectoIV_EstructuraDatos.Prin();
                 this.hide();
-            }else{
+                jLabel3.setText(ProjectoIV_EstructuraDatos.Usuario.getNomb());
+                jLabel5.setText(ProjectoIV_EstructuraDatos.Usuario.getPlanEstudio());
+                ShowPlan.show();
+            } else {
                 JOptionPane.showMessageDialog(this, "Usuario no encontrado");
             }
         } catch (Exception ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1MouseClicked
+
+    private void jMenu1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu1MouseClicked
+
+        File f = new File("./data/user.txt");
+//Escritura
+        try {
+            FileWriter w = new FileWriter(f, true);
+            BufferedWriter bw = new BufferedWriter(w);
+            PrintWriter wr = new PrintWriter(bw);
+            String WRITE = COD.getText() + ";" + PLANESTUDIO.getModel().getSelectedItem() + ";" + NOMB.getText();
+            wr.write("\r\n" + WRITE);//escribimos en el archivo
+            wr.close();
+            bw.close();
+        } catch (Exception e) {
+            System.err.println("Write Error");
+        }
+
+        COD.setText("");
+        NOMB.setText("");
+        Usuario.hide();
+    }//GEN-LAST:event_jMenu1MouseClicked
+
+    private void none(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_none
+    }//GEN-LAST:event_none
+
+    private void jMenu3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu3MouseClicked
+        PLANESTUDIO.removeAllItems();
+        for (PlanEstudio tmp : ProjectoIV_EstructuraDatos.Planes) {
+            PLANESTUDIO.addItem(tmp.getCodigo());
+        }
+        Usuario.setVisible(true);
+    }//GEN-LAST:event_jMenu3MouseClicked
+
+    private void jMenu6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu6MouseClicked
+        ProjectoIV_EstructuraDatos.displayGraph(ProjectoIV_EstructuraDatos.Planes.get(ProjectoIV_EstructuraDatos.getPlanI()).getPlan());
+    }//GEN-LAST:event_jMenu6MouseClicked
 
     /**
      * @param args the command line arguments
@@ -168,11 +351,31 @@ public class Login extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField COD;
+    private javax.swing.JTextField NOMB;
+    private javax.swing.JComboBox PLANESTUDIO;
     private javax.swing.JFrame ShowPlan;
     private javax.swing.JTextField UserTxt;
+    private javax.swing.JFrame Usuario;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenu jMenu6;
+    private javax.swing.JMenu jMenu7;
+    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuBar jMenuBar2;
+    private javax.swing.JMenuItem jMenuItem1;
+    private javax.swing.JMenuItem jMenuItem2;
+    private javax.swing.JMenuItem jMenuItem3;
     // End of variables declaration//GEN-END:variables
 }

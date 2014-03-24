@@ -39,10 +39,11 @@ public class Clase {
     public String getCodigo(){
         return Codigo;
     }
-    
-    public boolean isSemestral(){
+
+    public boolean isSemestral() {
         return Semestral;
     }
+    
     
     
 }

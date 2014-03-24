@@ -4,13 +4,22 @@
  */
 package projectoiv_estructuradatos;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Paint;
 import java.awt.Rectangle;
+import java.awt.Shape;
+import java.awt.Stroke;
+import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import static java.util.Collections.list;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -33,8 +42,8 @@ import org.jgrapht.traverse.TopologicalOrderIterator;
  */
 public class ProjectoIV_EstructuraDatos {
 
-    private static ArrayList<PlanEstudio> Planes = new ArrayList();
-    private static User Usuario;
+    public static ArrayList<PlanEstudio> Planes = new ArrayList();
+    public static User Usuario;
     private static JGraphModelAdapter m_jgAdapter;
 
     public static Graph Ordenados(DirectedGraph X) {
@@ -59,7 +68,9 @@ public class ProjectoIV_EstructuraDatos {
         fillPlanes();
         fillApproved();
         run(Usuario);
-        displayGraph(Ordenados(Planes.get(0).getPlan()));
+        //displayGraph(Ordenados(Planes.get(0).getPlan()));
+
+        //run(Usuario);
     }
 
     public static void displayGraph(Graph Xg) {
@@ -113,7 +124,7 @@ public class ProjectoIV_EstructuraDatos {
                     return true;
                 }
             } catch (Exception e) {
-                System.out.println(e);
+                //System.out.println(e);
                 //System.err.println("No se encontró \"user.txt\"");
             }
         }
@@ -225,14 +236,13 @@ public class ProjectoIV_EstructuraDatos {
         File Archivo = new File("./data/ClasesAprobadas.txt");
         try {
             PrintWriter out = new PrintWriter(new FileWriter(Archivo, true));
-            for(int i=0;i<app.size();i++){
-                out.append(Usuario.getCod()+";"+app.get(i) + "\n");
+            for (int i = 0; i < app.size(); i++) {
+                out.append(Usuario.getCod() + ";" + app.get(i) + "\n");
             }
             out.close();
         } catch (IOException e) {
             //System.err.println("Error escribiendo a ClasesAprobadas.txt");
         }
-
     }
 
     private static void fillPlanes() throws FileNotFoundException {
@@ -319,7 +329,7 @@ public class ProjectoIV_EstructuraDatos {
 
             } catch (Exception e) {
                 //System.out.println(e);
-               // System.err.println("No se encontró \"requisitos.txt\"");
+                //System.err.println("No se encontró \"requisitos.txt\"");
             }
         }
 
@@ -336,6 +346,15 @@ public class ProjectoIV_EstructuraDatos {
         }
 
         return null;
+    }
+
+    public static int getPlanI() {
+        for (int i = 0; i < Planes.size(); i++) {
+            if (Planes.get(i).getCodigo().equals(Usuario.getPlanEstudio())) {
+                return i;
+            }
+        }
+        return -1;
     }
     /*
      private static void fillPlanesOrdenados() {
