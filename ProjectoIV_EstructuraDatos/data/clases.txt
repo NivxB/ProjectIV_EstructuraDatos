@@ -15,7 +15,7 @@ Programacion II;CCC105;SISI;0
 Lab. PrograII;LCP208;SISI;0
 IdiomaI;EIE1;SISI;0
 Programacion III;CCC208;SISI;0
-Lab. PrograIII;LCP205;SISI;0
+Lab. PrograIII;LCP208;SISI;0
 Ofimatica III;LCC3;SISI;0
 Calculo Integral;MAT201;SISI;0
 Algebra Lineal;MAT105;SISI;0

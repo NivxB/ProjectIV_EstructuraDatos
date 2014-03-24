@@ -8,18 +8,28 @@ import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Paint;
+import java.awt.Rectangle;
 import java.awt.Shape;
 import java.awt.Stroke;
 import java.awt.geom.Ellipse2D;
+import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import static java.util.Collections.list;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Scanner;
 import java.util.Set;
 import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import org.jgraph.JGraph;
+import org.jgraph.graph.DefaultGraphCell;
+import org.jgraph.graph.GraphConstants;
+import org.jgrapht.DirectedGraph;
+import org.jgrapht.Graph;
 import org.jgrapht.ext.JGraphModelAdapter;
 import org.jgrapht.traverse.TopologicalOrderIterator;
 
@@ -30,53 +40,67 @@ import org.jgrapht.traverse.TopologicalOrderIterator;
 public class ProjectoIV_EstructuraDatos {
 
     private static ArrayList<PlanEstudio> Planes = new ArrayList();
-    private static ArrayList<ArrayList<Nodo>> PlanesOrdenados = new ArrayList();
     private static User Usuario;
-    //private static ArrayList<Clase> Clases = new ArrayList();
-    //private static ArrayList<Requisito> Requisitos = new ArrayList();
-    //private static int PlanActual = 0;
+    private static JGraphModelAdapter m_jgAdapter;
 
-    public static void fillOrdenados() {
-        PlanesOrdenados.add(new ArrayList<Nodo>());
-        TopologicalOrderIterator<Nodo, String> ordenados = new TopologicalOrderIterator(Planes.get(0).getPlan());
-        while (ordenados.hasNext()) {
-            Nodo tmp = ordenados.next();
-            if (!tmp.getData().isApproved()) {
-                PlanesOrdenados.get(PlanesOrdenados.size() - 1).add(tmp);
-            }
-        }
+    public static Graph Ordenados(DirectedGraph X) {
+        TopologicalOrderIterator<Nodo, String> ordenados = new TopologicalOrderIterator(X);
+        return ordenados.getGraph();
     }
-    
-    
+
+    private static void positionVertexAt(Object vertex, int x, int y) {
+        DefaultGraphCell cell = m_jgAdapter.getVertexCell(vertex);
+        Map attr = cell.getAttributes();
+        Rectangle b = GraphConstants.getBounds(attr).getBounds();
+
+        GraphConstants.setBounds(attr, new Rectangle(x, y, b.width, b.height));
+
+        Map cellAttr = new HashMap();
+        cellAttr.put(cell, attr);
+        m_jgAdapter.edit(cellAttr, null, null, null);
+    }
+
     public static void Prin() throws Exception {
         //Usuario = new User("NX", "SISI");
         fillPlanes();
         fillApproved();
-        
-        JGraphModelAdapter m_jgAdapter = new JGraphModelAdapter(Planes.get(0).getPlan());
+        displayGraph(Ordenados(Planes.get(0).getPlan()));
+
+        //run(Usuario);
+    }
+
+    public static void displayGraph(Graph Xg) {
+        m_jgAdapter = new JGraphModelAdapter(Xg);
         JFrame D = new JFrame();
         JGraph S = new JGraph(m_jgAdapter);
-        D.add(S);
+        Nodo[] NODO = (Nodo[]) Xg.vertexSet().toArray(new Nodo[0]);
+        int X = 0;
+        int Y = 0;
+        for (Nodo tmp : NODO) {
+            if (X == 400) {
+                X = 0;
+                Y += 50;
+            }
+
+            if (tmp.getData().getCodigo().equals("LCP104") || tmp.getData().getCodigo().equals("LCP105") || tmp.getData().getCodigo().equals("LCP208")) {
+                X -= 100;
+                if (X < 0){
+                    X = 300;
+                    Y-=50;
+                }
+                positionVertexAt(tmp, X, Y + 25);
+            } else {
+                positionVertexAt(tmp, X, Y);
+            }
+            X += 100;
+        }
+        JPanel container = new JPanel();
+        container.add(S);
+        JScrollPane pane = new JScrollPane(container, JScrollPane.VERTICAL_SCROLLBAR_ALWAYS, JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+        D.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        D.add(pane);
+        D.pack();
         D.show();
-        //run(Usuario);
-        // paintGraph(Planes.get(0).getPlan());
-        //fillPlanesOrdenados();
-        //paintGraph(Planes.get(1).getPlan());
-
-
-        /*       for (int i = 0; i < Clases.size(); i++) {
-         System.out.println(Clases.get(i).getName());
-         }
-        
-         for(int i=0;i<Requisitos.size();i++){
-         System.out.println(Requisitos.get(i).getCodigo()+": ");
-         for (int j = 0; j < Requisitos.get(i).getCodigoAbre().size(); j++) {
-         System.out.println("z"+Requisitos.get(i).getCodigoAbre().get(j)); 
-         }
-         }
-         */
-
-
     }
 
     public static boolean Login(String User) throws FileNotFoundException {
@@ -105,7 +129,6 @@ public class ProjectoIV_EstructuraDatos {
 
     public static void Logout() {
         Usuario.clear();
-        PlanesOrdenados.clear();
         removeApproved();
     }
 
@@ -117,6 +140,10 @@ public class ProjectoIV_EstructuraDatos {
             Nodo[] Cla = (Nodo[]) tmp.getPlan().vertexSet().toArray(new Nodo[0]);
             for (Nodo temp : Cla) {
                 setApproved(temp.getData());
+                if (temp.getData().isApproved()) {
+                    System.out.println("S");
+                    tmp.getPlan().removeVertex(temp);
+                }
             }
         }
     }
@@ -192,11 +219,7 @@ public class ProjectoIV_EstructuraDatos {
     }
 
     private static void fillPlanes() throws FileNotFoundException {
-        //Llenado por cada plan de estudio que este guardado
-        //Archivo TXT
-        //Archivo BIN
-        //Base de Datos
-        //
+
         File Archivo = new File("./data/planes.txt");
         Scanner s = new Scanner(Archivo);
         while (s.hasNextLine()) {
@@ -256,30 +279,6 @@ public class ProjectoIV_EstructuraDatos {
         }
     }
 
-    /*
-     private static void fillRequisitos() throws FileNotFoundException {//similar a fillClases
-     Clase[] ClasesP = (Clase[]) Planes.get(Planes.size() - 1).getPlan().getVertices().toArray(new Clase[0]);
-     for (int i = 0; i < ClasesP.length; i++) {
-     Clase procesa = ClasesP[i];//clase por procesar
-     ArrayList<String> ca = new ArrayList();//arraylist de strings de los codigos que abre
-
-     File Archivo = new File("./data/requisitos.txt");
-     Scanner s = new Scanner(Archivo);
-     while (s.hasNext()) {
-     try {
-     String[] arr = s.nextLine().split(";");
-     if (arr[0].equals(procesa.getCodigo()) && arr[2].equals(Planes.get(Planes.size() - 1).getName())) {
-     String abre = arr[1];
-     ca.add(abre);
-     }
-     } catch (Exception e) {
-     System.err.println("No se encontró \"requisitos.txt\"");
-     }
-     }
-     //Requisitos.add(new Requisito(procesa.getCodigo(),ca));
-     }
-     }
-     */
     private static void fillEdges() throws FileNotFoundException {
 
         File Archivo = new File("./data/requisitos.txt");
