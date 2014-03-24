@@ -4,19 +4,13 @@
  */
 package projectoiv_estructuradatos;
 
-import java.awt.BasicStroke;
-import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.Paint;
 import java.awt.Rectangle;
-import java.awt.Shape;
-import java.awt.Stroke;
-import java.awt.geom.Ellipse2D;
-import java.awt.geom.Rectangle2D;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
-import static java.util.Collections.list;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -65,7 +59,7 @@ public class ProjectoIV_EstructuraDatos {
         fillPlanes();
         fillApproved();
         run(Usuario);
-        displayGraph(Ordenados(Planes.get(0).getPlan()));        
+        displayGraph(Ordenados(Planes.get(0).getPlan()));
     }
 
     public static void displayGraph(Graph Xg) {
@@ -83,9 +77,9 @@ public class ProjectoIV_EstructuraDatos {
 
             if (tmp.getData().getCodigo().equals("LCP104") || tmp.getData().getCodigo().equals("LCP105") || tmp.getData().getCodigo().equals("LCP208")) {
                 X -= 100;
-                if (X < 0){
+                if (X < 0) {
                     X = 300;
-                    Y-=50;
+                    Y -= 50;
                 }
                 positionVertexAt(tmp, X, Y + 25);
             } else {
@@ -120,7 +114,7 @@ public class ProjectoIV_EstructuraDatos {
                 }
             } catch (Exception e) {
                 System.out.println(e);
-                System.err.println("No se encontró \"user.txt\"");
+                //System.err.println("No se encontró \"user.txt\"");
             }
         }
         return false;
@@ -162,6 +156,7 @@ public class ProjectoIV_EstructuraDatos {
         System.out.println(u.getPlanEstudio().toString());
         Nodo[] Vertices = new Nodo[0];
         ArrayList<Integer> aprobadas = new ArrayList();
+        ArrayList<String> app = new ArrayList();//arreglo de strings con codigo de aprobadas para escribir en ClasesAprobadas.txt
         int selection = 0;
         int thisPlan = 0;
         for (int i = 0; i < Planes.size(); i++) {
@@ -210,20 +205,32 @@ public class ProjectoIV_EstructuraDatos {
         Set<Integer> set = new HashSet<Integer>(aprobadas);//o podría hacer un método para remover duplicados, pero sabemos que eso no pasará :)
 
         for (Integer temp : set) {
+            app.add(Vertices[temp - 1].getData().getCodigo());
             Planes.get(thisPlan).getPlan().removeVertex(Vertices[temp - 1]);
         }
-        
-        int sem=1;
+
+        int sem = 1;
 
         System.out.println("\nIngrese el periodo actual: (1,2,3,4)");
-        sem=s.nextInt();
-        
-        if(sem==2||sem==4){
-            for(Nodo n :Vertices){
-                if(n.getData().isSemestral()){
+        sem = s.nextInt();
+
+        if (sem == 2 || sem == 4) {
+            for (Nodo n : Vertices) {
+                if (n.getData().isSemestral()) {
                     Planes.get(thisPlan).getPlan().removeVertex(n);
                 }
             }
+        }
+
+        File Archivo = new File("./data/ClasesAprobadas.txt");
+        try {
+            PrintWriter out = new PrintWriter(new FileWriter(Archivo, true));
+            for(int i=0;i<app.size();i++){
+                out.append(Usuario.getCod()+";"+app.get(i) + "\n");
+            }
+            out.close();
+        } catch (IOException e) {
+            //System.err.println("Error escribiendo a ClasesAprobadas.txt");
         }
 
     }
@@ -240,7 +247,7 @@ public class ProjectoIV_EstructuraDatos {
                 fillClases();
                 fillEdges();
             } catch (Exception e) {
-                System.err.println("No se encontró \"planes.txt\"");
+                //System.err.println("No se encontró \"planes.txt\"");
             }
         }
     }
@@ -284,7 +291,7 @@ public class ProjectoIV_EstructuraDatos {
                 }
             } catch (Exception e) {
                 //System.out.println(e.toString());
-                System.err.println("No se encontró \"clases.txt\"");
+                //System.err.println("No se encontró \"clases.txt\"");
             }
         }
     }
@@ -312,7 +319,7 @@ public class ProjectoIV_EstructuraDatos {
 
             } catch (Exception e) {
                 //System.out.println(e);
-                System.err.println("No se encontró \"requisitos.txt\"");
+               // System.err.println("No se encontró \"requisitos.txt\"");
             }
         }
 
